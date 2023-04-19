@@ -11,5 +11,5 @@ export default async function Page() {
         <>
             <h2>Lista de notícia</h2>
         </>
-    )
+    ) 
 }
