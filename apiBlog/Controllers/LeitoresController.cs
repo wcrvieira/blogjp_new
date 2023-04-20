@@ -13,17 +13,17 @@ public class LeitoresController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult Post(Leitores model)
+    public async Task<ActionResult> Post([FromBody] Leitores model)
     {
         try
         {
             context.Leitor.Add(model);
-            context.SaveChanges();
-            return Ok("Tipo de curso salvo com sucesso");
+            await context.SaveChangesAsync();
+            return Ok("Leitor salvo com sucesso.");
         }
         catch
         {
-            return BadRequest("Falha ao inserir o tipo de curso informado");
+            return BadRequest("Falha ao inserir o Leitor.");
         }
     }
 
@@ -36,7 +36,7 @@ public class LeitoresController : ControllerBase
         }
         catch
         {
-            return BadRequest("Erro ao obter os tipos de curso");
+            return BadRequest("Erro ao obter os Leitores.");
         }
     }
 
