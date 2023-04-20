@@ -3,32 +3,42 @@ using Microsoft.EntityFrameworkCore;
 
 [Route("api/[controller]")]
 [ApiController]
-public class LeitorController : ControllerBase
+public class LeitoresController : ControllerBase
 {
     private readonly DataContext context;
 
-    public LeitorController(DataContext Context)
+    public LeitoresController(DataContext Context)
     {
         context = Context;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Leitores>>> Get()
+    [HttpPost]
+    public ActionResult Post(Leitores model)
     {
         try
         {
-            return Ok(await context.Leitor.ToListAsync());
+            context.Leitor.Add(model);
+            context.SaveChanges();
+            return Ok("Tipo de curso salvo com sucesso");
         }
         catch
         {
-            return BadRequest("Erro ao obter os Leitores cadastrados.");
+            return BadRequest("Falha ao inserir o tipo de curso informado");
         }
     }
 
-    [HttpPost]
-    public ActionResult Post(Leitores item)
+    [HttpGet]
+    public ActionResult<IEnumerable<Leitores>> Get()
     {
-        return Ok("Apenas validando os dados");
+        try
+        {
+            return Ok(context.Leitor.ToList());
+        }
+        catch
+        {
+            return BadRequest("Erro ao obter os tipos de curso");
+        }
     }
+
 
 }
